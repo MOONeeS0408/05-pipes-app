@@ -1,9 +1,25 @@
 import { Component, signal } from '@angular/core';
 import { ToggleCasePipe } from '../../pipes/toggle-case.pipe';
+import { heroes } from '../../data/heroes.data';
+import { CanFlyPipe } from '../../pipes/canFly-pipe';
+import { ColorPipe } from '../../pipes/color-pipe';
+import { HeroTextColorPipe } from '../../pipes/heroTextColor-pipe';
+import { HeroCreatorPipe } from '../../pipes/heroCreator-pipe';
+import { HeroSortByPipe } from '../../pipes/hero-sort-by-pipe';
+import { Hero } from '../../interfaces/hero.interface';
+import { HeroFilterPipe } from '../../pipes/hero-filter-pipe';
 
 @Component({
   selector: 'app-custom-page',
-  imports: [ToggleCasePipe],
+  imports: [
+    ToggleCasePipe,
+    CanFlyPipe,
+    ColorPipe,
+    HeroTextColorPipe,
+    HeroCreatorPipe,
+    HeroSortByPipe,
+    HeroFilterPipe,
+  ],
   templateUrl: './custom-page.html',
 })
 export default class CustomPage {
@@ -19,4 +35,10 @@ export default class CustomPage {
     }
     return this.uppercase.set(true);
   }
+
+  heroes = signal(heroes);
+
+  sortBy = signal<keyof Hero | null>(null);
+
+  searchQuery = signal('');
 }

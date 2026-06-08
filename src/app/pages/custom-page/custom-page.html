@@ -1,8 +1,3 @@
-<section class="mx-10">
-  <h1 class="text-2xl font-bold flex justify-center">Pipes Basicos</h1>
-  <h3 class="text-xl font-thin flex justify-center">Pipes incluidos en Angular</h3>
-</section>
-
 <div class="stats shadow stats-horizontal flex justify-around">
   <div class="stat place-items-center">
     <div class="stat-title">Toggle Case Pipe</div>
@@ -12,3 +7,67 @@
     <button (click)="changeUppercase()" class="btn btn-secondary">ToggleCase</button>
   </div>
 </div>
+
+<div class="divider my-2"></div>
+
+<section class="mx-10">
+  <h1 class="text-2xl font-bold flex justify-center">
+    Filtrando por {{ searchQuery() }} ordenado por: {{ sortBy() }}
+  </h1>
+
+  <div class="flex gap-2 justify-end w-full mt-2">
+    <input
+      type="text"
+      class="input input-bordered w-full max-w-xs"
+      placeholder="Buscar heroe"
+      (input)="searchQuery.set(txtSearch.value)"
+      #txtSearch
+    />
+    <div class="flex flex-1"></div>
+
+    <button (click)="sortBy.set('name')" class="btn btn-primary">Por nombre</button>
+    <button (click)="sortBy.set('canFly')" class="btn btn-accent">Por volar</button>
+    <button (click)="sortBy.set('color')" class="btn btn-secondary">Por color</button>
+    <button (click)="sortBy.set('creator')" class="btn btn-info">Por creador</button>
+  </div>
+</section>
+
+<section class="overflow-x-auto w-full">
+  <table class="table table-xs w-full">
+    <!-- head -->
+    <thead>
+      <tr>
+        <th></th>
+        <th>Nombre</th>
+        <th>Puede volar</th>
+        <th>Color</th>
+        <th>Creador</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- row 1 -->
+      @for (
+        hero of heroes() | heroFilter: searchQuery() | heroSortBy: sortBy();
+        track hero.id;
+        let i = $index
+      ) {
+        <tr>
+          <th>{{ i + 1 }}</th>
+          <td>{{ hero.name }}</td>
+          <td>
+            <span
+              class="text-xs w-44"
+              [class.text-success]="hero.canFly"
+              [class.text-error]="!hero.canFly"
+              >{{ hero.canFly | canFly }}</span
+            >
+            <!-- /* canFly. Puede volvar */ -->
+          </td>
+          <!-- [style.color]="hero.color | colorPipe" -->
+          <td [style.color]="hero.color | HeroTextColor">{{ hero.color | colorPipe }}</td>
+          <td>{{ hero.creator | HeroCreator }}</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</section>
