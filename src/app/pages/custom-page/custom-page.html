@@ -1,1 +1,14 @@
-<p>custom-page works!</p>,
+<section class="mx-10">
+  <h1 class="text-2xl font-bold flex justify-center">Pipes Basicos</h1>
+  <h3 class="text-xl font-thin flex justify-center">Pipes incluidos en Angular</h3>
+</section>
+
+<div class="stats shadow stats-horizontal flex justify-around">
+  <div class="stat place-items-center">
+    <div class="stat-title">Toggle Case Pipe</div>
+    <div class="stat-value">{{ name() | toggleCase: uppercase() }}</div>
+    <div class="stat-desc">{{ name() }}</div>
+    <!-- upperCase.set(!upperCase()) -->
+    <button (click)="changeUppercase()" class="btn btn-secondary">ToggleCase</button>
+  </div>
+</div>
